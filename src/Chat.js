@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import './Chat.css';
 import db from './firebase';
 import { useStateValue } from './StateProvider';
-import firebase from './firebase';
+import firebase from 'firebase/compat/app';
 
 function Chat() {
 
@@ -39,8 +39,8 @@ function Chat() {
     const sendMessage = (e) => {
         e.preventDefault();
         console.log("You have typed ", input);
-        db.collection("rooms")
-            .doc(roomId).collection("message").add({
+        db.collection('rooms')
+            .doc(roomId).collection('messages').add({
                 message: input,
                 name: user.displayName,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
@@ -69,7 +69,7 @@ function Chat() {
                 </div>
             </div>
             <div className='chat_body'>
-                {messages.map(message => (
+                {messages.map((message) => (
                     <p className={`chat_message ${true && "chat_receiver"}`}>
                         <span className='chat_name'>{message.name}</span>
                         {message.message}
